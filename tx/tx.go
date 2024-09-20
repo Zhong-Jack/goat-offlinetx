@@ -35,7 +35,7 @@ func SendTx(txBytes []byte) error {
 		return err
 	}
 
-	fmt.Println("打印 tx response info:", grpcRes)
+	fmt.Println("打印 tx response info:", grpcRes.TxResponse)
 
 	return nil
 }
