@@ -12,6 +12,7 @@ import (
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/txscript"
 	bitcointypes "github.com/goatnetwork/goat/x/bitcoin/types"
+	relayertypes "github.com/goatnetwork/goat/x/relayer/types"
 	"goat-offlinetx/sdkclient"
 	"golang.org/x/crypto/ripemd160"
 )
@@ -104,19 +105,11 @@ func QueryPubKey3() {
 		fmt.Println("query goat pubkey err：", err)
 	}
 
-	pubKey := response.PublicKey.GetSecp256K1()
+	// 000383560def84048edefe637d0119a4428dd12a42765a118b2bf77984057633c50e
+	pubKey := response.PublicKey
 
-	// 将公钥字节数组转换为十六进制字符串
-	pubKeyHex := hex.EncodeToString(pubKey)
-	fmt.Println("公钥的十六进制字符串:", pubKeyHex)
+	fmt.Println("pubkey: ", hex.EncodeToString(relayertypes.EncodePublicKey(&pubKey)))
 
-	network := &chaincfg.MainNetParams
-	p2wpkh, err := btcutil.NewAddressWitnessPubKeyHash(btcutil.Hash160(pubKey), network)
-	if err != nil {
-		fmt.Println("new address err:", err)
-	}
-
-	fmt.Println("btc address: ", p2wpkh.EncodeAddress())
 }
 
 func QueryDepositAddress() {
